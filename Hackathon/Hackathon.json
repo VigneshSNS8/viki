@@ -1,0 +1,947 @@
+{
+  "name": "Hackathon",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1160,
+        40
+      ],
+      "id": "bbe5ea55-685e-4b97-b97c-29d2ae088ce9",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc",
+          "mode": "list",
+          "cachedResultName": "Mentor Mentee",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Mentees",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -940,
+        40
+      ],
+      "id": "22f69ebd-0a18-480b-b401-38d5e413fb9a",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "e9AtXBDb1f05NuEQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc",
+          "mode": "list",
+          "cachedResultName": "Mentor Mentee",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1326627435,
+          "mode": "list",
+          "cachedResultName": "Mentors",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit#gid=1326627435"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -800,
+        300
+      ],
+      "id": "ab16c548-42b3-4c33-8a45-a977630e5e99",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "e9AtXBDb1f05NuEQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -720,
+        40
+      ],
+      "id": "5aa0dd2f-ae83-4fb6-ac8b-89cadaffe5a9",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -580,
+        300
+      ],
+      "id": "c27434ab-67d6-43df-bac5-bc58da5e97a1",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const students = $input.all().map((item) => item.json);\nconst professors = $(\"Code1\")\n  .all()\n  .map((item) => item.json);\n\nconst matchedPairs = students\n  .map((student) => {\n    const matchedProfessor = professors.find(\n      (professor) =>\n        professor[\"Area of Expertise\"] === student[\"Interested field of Study\"],\n    );\n\n    return matchedProfessor\n      ? {\n          \"Student Name\": student.Name,\n          \"Register Number\": student[\"Register Number\"],\n          \"Email id\": student[\"Email id\"],\n          \"Interested field of Study\": student[\"Interested field of Study\"],\n          \"Professor Name\": matchedProfessor.Name,\n          \"Area of Expertise\": matchedProfessor[\"Area of Expertise\"],\n          \"Professor Email\": matchedProfessor[\"Email id\"],\n        }\n      : null;\n  })\n  .filter((item) => item !== null);\n\nreturn matchedPairs;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -260,
+        100
+      ],
+      "id": "ec1dd740-21e8-4920-803f-d5be71909f63",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc",
+          "mode": "list",
+          "cachedResultName": "Mentor Mentee",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1298933803,
+          "mode": "list",
+          "cachedResultName": "Assign",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit#gid=1298933803"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Student Name",
+              "displayName": "Student Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Register Number",
+              "displayName": "Register Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email id",
+              "displayName": "Email id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Interested field of Study",
+              "displayName": "Interested field of Study",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Professor Name",
+              "displayName": "Professor Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Area of Expertise",
+              "displayName": "Area of Expertise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Professor Email",
+              "displayName": "Professor Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        20,
+        120
+      ],
+      "id": "f7c47658-3e6f-4e0c-8cad-3e6b228dc21a",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "e9AtXBDb1f05NuEQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -460,
+        80
+      ],
+      "id": "3a88cf56-9b99-463b-8af7-d440723217bf",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "= need to create 1 question based on the {{ $json['Area of Expertise'] }} and give it only the question for all with blooms taxonomy level 3",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        240,
+        120
+      ],
+      "id": "59cb9264-3a55-4e36-9995-1d06fd21c1fe",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        280,
+        340
+      ],
+      "id": "0a97d8f4-2140-46da-8452-3246c59ba99d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "K72Ozkddhej7M3Iz",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc",
+          "mode": "list",
+          "cachedResultName": "Mentor Mentee",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2058741741,
+          "mode": "list",
+          "cachedResultName": "Sheet5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit#gid=2058741741"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Student Name",
+              "displayName": "Student Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Register Number",
+              "displayName": "Register Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email id",
+              "displayName": "Email id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Interested field of Study",
+              "displayName": "Interested field of Study",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Professor Name",
+              "displayName": "Professor Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Area of Expertise",
+              "displayName": "Area of Expertise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Professor Email",
+              "displayName": "Professor Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        600,
+        200
+      ],
+      "id": "a2a9e76b-19cf-4983-bb65-b2410e51285d",
+      "name": "Google Sheets3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "e9AtXBDb1f05NuEQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        820,
+        120
+      ],
+      "id": "69a8d696-ba03-4010-b711-d83f789f69c4",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc",
+          "mode": "list",
+          "cachedResultName": "Mentor Mentee",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 333678792,
+          "mode": "list",
+          "cachedResultName": "Sheet6",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit#gid=333678792"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Student Name",
+              "displayName": "Student Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Register Number",
+              "displayName": "Register Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email id",
+              "displayName": "Email id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Interested field of Study",
+              "displayName": "Interested field of Study",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Professor Name",
+              "displayName": "Professor Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Area of Expertise",
+              "displayName": "Area of Expertise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Professor Email",
+              "displayName": "Professor Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1040,
+        120
+      ],
+      "id": "de1d9edd-a0e9-43ea-af10-16e5d15c7ca2",
+      "name": "Google Sheets4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "e9AtXBDb1f05NuEQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtMinute": "={{ 0 }}"
+            },
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -700,
+        500
+      ],
+      "id": "d0a06dbc-9ceb-4c51-b109-ece11355e25e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc",
+          "mode": "list",
+          "cachedResultName": "Mentor Mentee",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1298933803,
+          "mode": "list",
+          "cachedResultName": "Assign",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1lSrJrbZ1eMsO0JPdl5_QXrf2gkxkuGZwrFuQwuWgZgc/edit#gid=1298933803"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -480,
+        500
+      ],
+      "id": "24b6254b-3ab9-4ea6-a573-32f4ab37a2bd",
+      "name": "Google Sheets5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "e9AtXBDb1f05NuEQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Draft a formal and professional reminder email for professors regarding an upcoming session. Include: 1. A clear subject line indicating the purpose and session details. 2. A concise introduction stating the session's objective and date. 3. A brief overview of the session's agenda. 4. A polite request for confirmation of attendance. 5. Contact information for inquiries or RSVPs. Ensure the tone is respectful and the content is free of grammatical errors.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        520
+      ],
+      "id": "ec9d0cf3-4e2a-4909-a94e-ae34db358e6b",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        720
+      ],
+      "id": "24ba9097-e061-4b51-8b8f-05f1d193f2fb",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "K72Ozkddhej7M3Iz",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Google Sheets5').item.json['Professor Email'] }}",
+        "subject": "Reminder: Faculty Development Session - \"Engaging Active Learning Strategies\" - [Date]",
+        "emailType": "text",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        160,
+        520
+      ],
+      "id": "0731ace8-5011-4bbc-b385-3fb1610c6538",
+      "name": "Gmail",
+      "webhookId": "e6b0f296-7586-49b0-b920-a97eafee4470",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "psK0LpqGo3y4kjza",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Draft a formal and professional reminder email for students regarding an upcoming session. Include: 1. A clear subject line indicating the purpose and session details. 2. A concise introduction stating the session's objective and date. 3. A brief overview of the session's agenda. 4. A polite request for confirmation of attendance. 5. Contact information for inquiries or RSVPs. Ensure the tone is respectful and the content is free of grammatical errors.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        880
+      ],
+      "id": "c9532534-83d8-44a6-9454-c49fc3dbefe7",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        1060
+      ],
+      "id": "c7d06e3a-d06f-4e77-9bba-d81e91c84fc6",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "K72Ozkddhej7M3Iz",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Google Sheets5').item.json['Email id'] }}",
+        "subject": "Reminder: Upcoming Session - Enhancing Research Skills - October 27, 2023",
+        "emailType": "text",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -200,
+        880
+      ],
+      "id": "ea68a2e5-7b7d-4882-b611-0bcbe6463838",
+      "name": "Gmail1",
+      "webhookId": "ef6c28c0-0125-40ef-b0d7-d99b11c4e9b1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "psK0LpqGo3y4kjza",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets4": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets5": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6bdfacb3-3fbd-4a6e-9469-13e67cfdf9e0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1ae2790b87920cd1a0678f4deb03e23b228bfe7dec85b45dee9869797f6b3a7d"
+  },
+  "id": "TlBk3shpS054dspf",
+  "tags": []
+}
